@@ -14,8 +14,11 @@ mongoose.connect(
     }
 );
 
-app.get('/', async (req, res) => {
-    const words = new WordsModel({ word: "Moon", wordTranslation: "Menulis" });
+app.post('/insert', async (req, res) => {
+    const word = req.body.word;
+    const translation = req.body.translation;
+
+    const words = new WordsModel({ word: word, wordTranslation: translation });
 
     try {
         await words.save();
