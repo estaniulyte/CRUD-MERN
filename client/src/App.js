@@ -6,6 +6,7 @@ function App() {
 
   const [word, setWord] = useState('');
   const [translation, setTranslation] = useState('');
+  const [newWordName, setNewWordName] = useState('');
 
   const [wordsList, setWordsList] = useState([]);
 
@@ -21,6 +22,17 @@ function App() {
       translation: translation,
     })
   };
+
+  const updateWord = (id) => {
+      Axios.put("http://localhost:3001/update", {
+        id: id,
+        newWordName: newWordName,
+      });
+  };
+
+  const deleteWord = (id) => {
+    Axios.delete(`http://localhost:3001/delete/${id}`);
+};
 
   return (
     <div className="App">
@@ -44,9 +56,24 @@ function App() {
 
       <h1>Words list</h1>
       {wordsList.map((val, key) => {
-        return <div key={key}>
+        return <div key={key} className="word">
           <h1>{val.word}</h1>
           <h1>{val.wordTranslation}</h1>
+          <input
+            type="text"
+            placeholder="New Word.."
+            onChange={(event) => {
+              setNewWordName(event.target.value);
+            }}
+          />
+          <button
+            onClick={
+              () => updateWord(val._id)
+            }
+          >
+            Update
+          </button>
+          <button onClick={() => deleteWord(val._id)}>Delete</button>
         </div>
       })}
     </div>

@@ -40,6 +40,27 @@ app.get('/read', async (req, res) => {
     })
 })
 
+app.put('/update', async (req, res) => {
+    const newWordName = req.body.newWordName;
+    const id = req.body.id;
+
+    try {
+         await WordsModel.findById(id, (err, updatedWord) => {
+            updatedWord.word = newWordName;
+            updatedWord.save();
+            res.send("updated");
+        });
+    } catch (err) {
+        console.log(err);
+    }
+})
+
+app.delete("/delete/:id", async (req, res) => {
+    const id = req.params.id;
+    await WordsModel.findByIdAndRemove(id).exec();
+    res.send("deleted");
+})
+
 app.listen(3001, () => {
     console.log('Server running on port 3001...')
 });
