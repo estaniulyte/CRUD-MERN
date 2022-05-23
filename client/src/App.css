@@ -12,3 +12,10 @@ input, button {
   font-size: 20px;
   margin: 5px;
 }
+
+.word {
+  border: 1px black solid;
+  padding: 15px 100px;
+  margin: 10px;
+  width: 450px;
+}
